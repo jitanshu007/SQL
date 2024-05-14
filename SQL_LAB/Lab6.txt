@@ -1,0 +1,159 @@
+s1:
+CREATE TYPE Person AS OBJECT ( name	VARCHAR2(50),
+age	NUMBER,
+address VARCHAR2(100)
+);
+
+
+s2:
+DECLARE
+p1 Person;
+BEGIN
+p1 := Person('Kalpan Bariya', 21, 'IIIT SURAT');
+
+DBMS_OUTPUT.PUT_LINE('Name: ' || p1.name); DBMS_OUTPUT.PUT_LINE('Age: ' || p1.age);
+DBMS_OUTPUT.PUT_LINE('Address: ' || p1.address); END;
+
+ 
+B)
+s1:
+CREATE OR REPLACE TYPE Person AS OBJECT ( id NUMBER,
+name VARCHAR2(100), age NUMBER,
+-- displayDetails member function
+MEMBER FUNCTION displayDetails RETURN VARCHAR2, MEMBER PROCEDURE updateAge(newAge NUMBER)
+);
+
+
+s2:
+CREATE OR REPLACE TYPE BODY Person AS
+
+MEMBER FUNCTION displayDetails RETURN VARCHAR2 IS BEGIN
+RETURN 'Person ID: ' || id || ', Name: ' || name || ', Age: ' || age; END;
+
+MEMBER PROCEDURE updateAge(newAge NUMBER) IS BEGIN
+age := newAge;
+END;
+END;
+Output:
+Type created.
+
+s3:
+DECLARE
+p1 Person := Person(1, 'Kalpan', 20); p2 Person := Person(2, 'KP', 28);
+
+BEGIN
+
+DBMS_OUTPUT.PUT_LINE(p1.displayDetails()); DBMS_OUTPUT.PUT_LINE(p2.displayDetails());
+
+p1.updateAge(25);
+ 
+DBMS_OUTPUT.PUT_LINE('Updated age:'); DBMS_OUTPUT.PUT_LINE(p1.displayDetails()); DBMS_OUTPUT.PUT_LINE(p2.displayDetails()); END;
+
+
+C)
+s1:
+CREATE TYPE Employee AS OBJECT (
+emp_id NUMBER, emp_name VARCHAR2(100), salary NUMBER,
+MEMBER FUNCTION calculate_bonus RETURN NUMBER
+);
+
+
+s2:
+CREATE TYPE BODY Employee AS
+
+MEMBER FUNCTION calculate_bonus RETURN NUMBER IS bonus_percentage NUMBER;
+bonus_amount NUMBER; BEGIN
+
+IF self.salary< 20000 THEN bonus_percentage := 0.15;
+ELSIF self.salary< 100000 THEN bonus_percentage := 0.20;
+ELSE
+bonus_percentage := 0.25; END IF;
+ 
+bonus_amount := self.salary * bonus_percentage;
+
+RETURN bonus_amount; END;
+END;
+
+
+s3:
+DECLARE
+emp_obj Employee; -- an instance of the Employee class emp_bonus NUMBER; -- a variable to store the bonus amount BEGIN
+emp_obj := Employee(1, 'Kalpan', 5000); emp_bonus := emp_obj.calculate_bonus;
+DBMS_OUTPUT.PUT_LINE('Employee Bonus: ' || emp_bonus); END;
+
+
+D)
+s1:
+CREATE OR REPLACE TYPE Employee AS OBJECT (
+emp_id NUMBER, emp_name VARCHAR2(90), salary NUMBER,
+
+MEMBER FUNCTION calculate_bonus RETURN NUMBER
+);
+
+
+s2:
+CREATE OR REPLACE TYPE BODY Employee AS
+
+MEMBER FUNCTION calculate_bonus RETURN NUMBER IS bonus_percentage NUMBER;
+ 
+bonus_amount NUMBER; BEGIN
+
+IF self.salary< 20000THEN bonus_percentage := 0.15;
+ELSIF self.salary< 100000 THEN bonus_percentage := 0.20;
+ELSE
+bonus_percentage := 0.25; END IF;
+bonus_amount := self.salary * bonus_percentage; RETURN bonus_amount;
+END;
+END;
+
+
+s3:
+CREATE OR REPLACE TYPE Manager AS OBJECT (
+emp_id NUMBER, emp_name VARCHAR2(90), salary NUMBER,
+employees_managed NUMBER, -- Additional
+
+CONSTRUCTOR FUNCTION Manager(
+emp_id NUMBER, emp_name VARCHAR2, salary NUMBER,
+employees_managed NUMBER
+) RETURN SELF AS RESULT,
+
+MEMBER FUNCTION calculate_bonus RETURN NUMBER
+);
+
+ 
+s4:
+CREATE OR REPLACE TYPE BODY Manager AS
+
+CONSTRUCTOR FUNCTION Manager(
+emp_id NUMBER, emp_name VARCHAR2, salary NUMBER,
+employees_managed NUMBER
+) RETURN SELF AS RESULT IS BEGIN
+SELF.emp_id := emp_id; SELF.emp_name := emp_name; SELF.salary := salary;
+SELF.employees_managed := employees_managed; RETURN;
+END;
+
+MEMBER FUNCTION calculate_bonus RETURN NUMBER IS bonus_percentage NUMBER;
+bonus_amount NUMBER; BEGIN
+
+IF self.salary< 50000 THEN bonus_percentage := 0.05;
+ELSIF self.salary< 100000 THEN bonus_percentage := 0.155;
+ELSE
+bonus_percentage := 0.25; END IF;
+bonus_amount := (self.salary + self.employees_managed * 1000) * bonus_percentage; RETURN bonus_amount;
+END;
+END;
+
+ 
+s5:
+DECLARE
+emp_obj Employee; emp_bonus NUMBER; BEGIN
+emp_obj := Employee(1, 'Kalpan', 20000); emp_bonus := emp_obj.calculate_bonus;
+DBMS_OUTPUT.PUT_LINE('Employee Bonus: ' || emp_bonus); END;
+
+
+s6:
+DECLARE
+manager_obj Manager; manager_bonus NUMBER; BEGIN
+manager_obj := Manager(2, 'Kalpan', 90000, 15); manager_bonus := manager_obj.calculate_bonus;
+DBMS_OUTPUT.PUT_LINE('Manager Bonus: ' || manager_bonus); END;
+

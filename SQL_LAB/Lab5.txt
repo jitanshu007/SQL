@@ -1,0 +1,68 @@
+CREATE DATABASE ecommerce; USE ecommerce;
+CREATE TABLE products ( product_id SERIAL PRIMARY KEY, product_name VARCHAR(50), product_category VARCHAR(20), product_price NUMERIC(10,2)
+);
+
+INSERT INTO products (product_name, product_category, product_price) VALUES ('Product A', 'Category 1', 19.99),
+('Product B', 'Category 2', 29.99),
+('Product C', 'Category 1', 39.99),
+('Product D', 'Category 3', 49.99),
+('Product E', 'Category 2', 59.99);
+
+CREATE TABLE inventory ( product_id INT, inventory_date DATE, inventory_level INT
+);
+ 
+INSERT INTO inventory (product_id, inventory_date, inventory_level) VALUES (1, '2022-01-01', 100),
+(2, '2022-01-01', 200),
+(3, '2022-01-01', 150),
+(4, '2022-01-01', 75),
+(5, '2022-01-01', 250),
+(1, '2022-01-02', 80),
+(2, '2022-01-02', 180),
+(3, '2022-01-02', 100),
+(4, '2022-01-02', 60),
+(5, '2022-01-02', 220),
+(1, '2022-01-03', 50),
+(2, '2022-01-03', 150),
+(3, '2022-01-03', 75),
+(4, '2022-01-03', 80),
+(5, '2022-01-03', 200);
+
+
+1)	What are the top 5 products with the highest inventory levels on the most recent inventory date ?
+SELECT p.product_name, i.inventory_level FROM products p
+JOIN inventory i ON p.product_id = i.product_id
+WHERE i.inventory_date = (SELECT MAX(inventory_date) FROM inventory) ORDER BY i.inventory_level DESC
+LIMIT 5;
+
+ 
+2)	What is the total inventory level for each product category on the most recent inventory date ?
+
+SELECT p.product_category, SUM(i.inventory_level) AS total_inventory_level FROM products p
+JOIN inventory i ON p.product_id = i.product_id
+WHERE i.inventory_date = (SELECT MAX(inventory_date) FROM inventory) GROUP BY p.product_category;
+
+
+3)	What is the average inventory level for each product category for the month of January 2022 ?
+
+
+SELECT p.product_category, AVG(i.inventory_level) AS avg_inventory_level FROM products p
+JOIN inventory i ON p.product_id = i.product_id
+WHERE i.inventory_date >= '2022-01-01' AND i.inventory_date < '2022-02-01' GROUP BY p.product_category;
+
+
+
+4)	Which products had a decrease in inventory level from the previous inventory date to the current inventory date ?
+
+SELECT	i1.product_id,	p.product_name,	i1.inventory_level	-	i2.inventory_level	AS inventory_diff
+FROM inventory i1
+JOIN inventory i2 ON i1.product_id = i2.product_id
+AND i1.inventory_date = i2.inventory_date + INTERVAL 1 day JOIN products p ON i1.product_id = p.product_id
+WHERE i1.inventory_level < i2.inventory_level;
+ 
+ 
+
+5)	What is the overall trend in inventory levels for each product category over the month of January 2022 ?
+SELECT p.product_category, i.inventory_date, AVG(i.inventory_level) AS avg_inventory_level FROM products p
+JOIN inventory i ON p.product_id = i.product_id
+WHERE i.inventory_date >= '2022-01-01' AND i.inventory_date < '2022-02-01' GROUP BY p.product_category, i.inventory_date
+ORDER BY p.product_category, i.inventory_date;

@@ -1,0 +1,60 @@
+CREATE DATABASE AS7; USE AS7;
+
+-- 1. Create a simple table countries CREATE TABLE AS7.countries (
+country_id INT,
+country_name VARCHAR(50), region_id INT
+);
+
+-- 2. Create a table countries if not exists
+CREATE TABLE IF NOT EXISTS AS7.countries (
+country_id INT,
+country_name VARCHAR(50), region_id INT
+);
+
+-- 3. Create the structure of table dup_countries similar to countries 
+CREATE TABLE AS7.dup_countries LIKE AS7.countries;
+
+-- 4. Create a duplicate copy of countries table including structure and data CREATE TABLE AS7.dup_countries AS SELECT * FROM AS7.countries;
+
+-- 5. Create a table countries with a constraint allowing NULL values CREATE TABLE AS7.countries (
+country_id INT,
+country_name VARCHAR(50), region_id INT,
+CONSTRAINT country_name_null CHECK (country_name IS NULL)
+);
+
+-- 6. Create a table jobs with max_salary check constraint CREATE TABLE AS7.jobs (
+job_id INT,
+job_title VARCHAR(50), min_salary DECIMAL(10,2), max_salary DECIMAL(10,2),
+CONSTRAINT max_salary_check CHECK (max_salary <= 25000)
+);
+
+-- 7. Create a table countries with specific allowed country entries CREATE TABLE AS7.countries (
+ 
+country_id INT,
+country_name VARCHAR(50), region_id INT,
+CONSTRAINT country_name_check CHECK (country_name IN ('Italy', 'India', 'China'))
+);
+
+-- 8. Create a table countries with no duplicate country_id allowed CREATE TABLE AS7.countries (
+country_id INT PRIMARY KEY, country_name VARCHAR(50), region_id INT
+);
+
+-- 9. Create a table jobs with default values for specified columns CREATE TABLE AS7.jobs (
+job_id INT,
+job_title VARCHAR(50) DEFAULT '', min_salary DECIMAL(10,2) DEFAULT 8000,
+max_salary DECIMAL(10,2)
+);
+
+-- 10. Create a table countries with country_id as a key field CREATE TABLE AS7.countries (
+country_id INT UNIQUE, country_name VARCHAR(50), region_id INT
+);
+
+-- 11. Create a table countries with auto-incremented country_id and unique constraint CREATE TABLE AS7.countries (
+country_id INT AUTO_INCREMENT PRIMARY KEY,
+country_name VARCHAR(50), region_id INT, UNIQUE(country_id)
+);
+
+-- 12. Create a table countries with unique combination of country_id and region_id CREATE TABLE AS7.countries (
+country_id INT,
+country_name VARCHAR(50), region_id INT, UNIQUE(country_id, region_id)
+) 

@@ -1,0 +1,334 @@
+CREATE DATABASE IF NOT EXISTS kp1;
+USE kp1;
+
+CREATE TABLE IF NOT EXISTS Employee (
+    EMP_ID INTEGER PRIMARY KEY,
+    FIRST_NAME VARCHAR(20),
+    LAST_NAME VARCHAR(20),
+    SALARY INTEGER,
+    JOINING_DATE DATE,
+    DEPARTMENT VARCHAR(50)
+);
+CREATE TABLE IF NOT EXISTS bonus(
+    BONUS_AMOUNT INTEGER,
+    BONUS_DATE DATE,
+    EMP_REF_ID INTEGER,
+    FOREIGN KEY (EMP_REF_ID) REFERENCES Employee(EMP_ID)
+);
+
+CREATE TABLE IF NOT EXISTS title(
+    EMP_TITLE VARCHAR(50),
+    AFFECTED_FROM DATE,
+    EMP_REF_ID INTEGER,
+    FOREIGN KEY (EMP_REF_ID) REFERENCES Employee(EMP_ID)
+);
+
+INSERT INTO Employee (EMP_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT)
+VALUES
+  (1, 'John', 'Doe', 50000, '2022-01-01', 'HR'),
+  (2, 'Jane', 'Smith', 60000, '2022-02-01', 'IT'),
+  (3, 'Alice', 'Johnson', 55000, '2022-03-01', 'Finance'),
+  (4, 'Bob', 'Williams', 70000, '2022-04-01', 'Marketing'),
+  (5, 'Eva', 'Jones', 48000, '2022-05-01', 'Sales'),
+  (6, 'Mike', 'Brown', 52000, '2022-06-01', 'IT'),
+  (7, 'Sara', 'Miller', 63000, '2022-07-01', 'Finance'),
+  (8, 'Tom', 'Anderson', 55000, '2022-08-01', 'HR'),
+  (9, 'Emily', 'Davis', 58000, '2022-09-01', 'Marketing'),
+  (10, 'Chris', 'Taylor', 67000, '2022-10-01', 'Sales'),
+  (11, 'David', 'Johnson', 59000, '2022-11-01', 'IT'),
+  (12, 'Laura', 'White', 72000, '2022-12-01', 'HR'),
+  (13, 'Alex', 'Turner', 60000, '2023-01-01', 'Sales'),
+  (14, 'Grace', 'Smith', 55000, '2023-02-01', 'IT'),
+  (15, 'Ryan', 'Williams', 68000, '2023-03-01', 'Finance'),
+  (16, 'Jessica', 'Miller', 50000, '2023-04-01', 'Marketing'),
+  (17, 'Eric', 'Brown', 75000, '2023-05-01', 'Sales'),
+  (18, 'Olivia', 'Jones', 47000, '2023-06-01', 'IT'),
+  (19, 'Michael', 'Anderson', 61000, '2023-07-01', 'HR'),
+  (20, 'Sophia', 'Davis', 53000, '2023-08-01', 'Marketing'),
+  (51, 'Laura', 'Adams', 58000, '2022-01-01', 'Marketing'),
+  (52, 'Daniel', 'Perez', 70000, '2022-02-01', 'IT'),
+  (53, 'Rachel', 'Smith', 52000, '2022-03-01', 'Sales'),
+  (54, 'Mark', 'Johnson', 60000, '2022-04-01', 'Finance'),
+  (55, 'Sophie', 'White', 48000, '2022-05-01', 'HR'),
+  (56, 'Edward', 'Martinez', 67000, '2022-06-01', 'IT'),
+  (57, 'Chloe', 'Turner', 55000, '2022-07-01', 'Finance'),
+  (58, 'Oliver', 'Davis', 72000, '2022-08-01', 'HR'),
+  (59, 'Mia', 'Walker', 63000, '2022-09-01', 'Marketing'),
+  (60, 'Ethan', 'Hill', 59000, '2022-10-01', 'Sales'),
+  (61, 'Emma', 'Garcia', 55000, '2022-11-01', 'IT'),
+  (62, 'Liam', 'Clark', 60000, '2022-12-01', 'HR'),
+  (63, 'Ava', 'Baker', 52000, '2023-01-01', 'Marketing'),
+  (64, 'Noah', 'Ward', 65000, '2023-02-01', 'Finance'),
+  (65, 'Isabella', 'Fisher', 53000, '2023-03-01', 'IT'),
+  (66, 'Lucas', 'Harrison', 70000, '2023-04-01', 'Sales'),
+  (67, 'Aria', 'Gomez', 48000, '2023-05-01', 'HR'),
+  (68, 'Liam', 'Clark', 55000, '2023-06-01', 'Finance'),
+  (69, 'Mila', 'Russell', 63000, '2023-07-01', 'Marketing'),
+  (70, 'James', 'Gordon', 59000, '2023-08-01', 'Sales'),
+  (71, 'Sophie', 'Thomas', 58000, '2023-01-01', 'Marketing'),
+  (72, 'William', 'Moore', 70000, '2023-02-01', 'IT'),
+  (73, 'Ava', 'Parker', 52000, '2023-03-01', 'Sales'),
+  (74, 'Daniel', 'Barnes', 60000, '2023-04-01', 'Finance'),
+  (75, 'Mia', 'Brown', 48000, '2023-05-01', 'HR'),
+  (76, 'Liam', 'Ward', 67000, '2023-06-01', 'IT'),
+  (77, 'Emma', 'Baker', 55000, '2023-07-01', 'Finance'),
+  (78, 'Oliver', 'Taylor', 72000, '2023-08-01', 'HR'),
+  (79, 'Isabella', 'Russell', 63000, '2023-09-01', 'Marketing'),
+  (80, 'Lucas', 'Gomez', 59000, '2023-10-01', 'Sales');
+
+INSERT INTO bonus (BONUS_AMOUNT, BONUS_DATE, EMP_REF_ID)
+VALUES
+  (1000, '2022-02-15', 1),
+  (1500, '2022-03-01', 2),
+  (1200, '2022-04-01', 3),
+  (800, '2022-05-01', 4),
+  (1300, '2022-06-01', 5),
+  (900, '2022-07-01', 6),
+  (1100, '2022-08-01', 7),
+  (1000, '2022-09-01', 8),
+  (1200, '2022-10-01', 9),
+  (1400, '2022-11-01', 10),
+  (950, '2022-12-01', 11),
+  (1050, '2023-01-01', 12),
+  (1150, '2023-02-01', 13),
+  (1250, '2023-03-01', 14),
+  (1350, '2023-04-01', 15),
+  (1450, '2023-05-01', 16),
+  (950, '2023-06-01', 17),
+  (1050, '2023-07-01', 18),
+  (1150, '2023-08-01', 19),
+  (1250, '2023-09-01', 20),
+  (1100, '2022-02-15', 51),
+  (950, '2022-03-01', 52),
+  (1200, '2022-04-01', 53),
+  (850, '2022-05-01', 54),
+  (1300, '2022-06-01', 55),
+  (900, '2022-07-01', 56),
+  (1000, '2022-08-01', 57),
+  (1150, '2022-09-01', 58),
+  (1050, '2022-10-01', 59),
+  (1400, '2022-11-01', 60),
+  (1200, '2022-12-01', 61),
+  (1300, '2023-01-01', 62),
+  (1000, '2023-02-01', 63),
+  (1100, '2023-03-01', 64),
+  (900, '2023-04-01', 65),
+  (1250, '2023-05-01', 66),
+  (850, '2023-06-01', 67),
+  (950, '2023-07-01', 68),
+  (1150, '2023-08-01', 69),
+  (1050, '2023-09-01', 70),
+  (1100, '2023-02-15', 71),
+  (950, '2023-03-01', 72),
+  (1200, '2023-04-01', 73),
+  (850, '2023-05-01', 74),
+  (1300, '2023-06-01', 75),
+  (900, '2023-07-01', 76),
+  (1000, '2023-08-01', 77),
+  (1150, '2023-09-01', 78),
+  (1050, '2023-10-01', 79),
+  (1400, '2023-11-01', 80);
+
+INSERT INTO title (EMP_TITLE, AFFECTED_FROM, EMP_REF_ID)
+VALUES
+  ('Manager', '2022-02-01', 1),
+  ('Developer', '2022-03-01', 2),
+  ('Analyst', '2022-04-01', 3),
+  ('Coordinator', '2022-05-01', 4),
+  ('Sales Representative', '2022-06-01', 5),
+  ('Database Administrator', '2022-07-01', 6),
+  ('Financial Analyst', '2022-08-01', 7),
+  ('HR Specialist', '2022-09-01', 8),
+  ('Marketing Manager', '2022-10-01', 9),
+  ('Sales Manager', '2022-11-01', 10),
+  ('IT Specialist', '2022-12-01', 11),
+  ('Financial Planner', '2023-01-01', 12),
+  ('Sales Analyst', '2023-02-01', 13),
+  ('Software Engineer', '2023-03-01', 14),
+  ('Marketing Coordinator', '2023-04-01', 15),
+  ('HR Manager', '2023-05-01', 16),
+  ('Sales Coordinator', '2023-06-01', 17),
+  ('Database Analyst', '2023-07-01', 18),
+  ('Financial Manager', '2023-08-01', 19),
+  ('Marketing Analyst', '2023-09-01', 20),
+  ('Manager', '2022-02-01', 51),
+  ('Developer', '2022-03-01', 52),
+  ('Analyst', '2022-04-01', 53),
+  ('Coordinator', '2022-05-01', 54),
+  ('Sales Representative', '2022-06-01', 55),
+  ('Database Administrator', '2022-07-01', 56),
+  ('Financial Analyst', '2022-08-01', 57),
+  ('HR Specialist', '2022-09-01', 58),
+  ('Marketing Manager', '2022-10-01', 59),
+  ('Sales Manager', '2022-11-01', 60),
+  ('IT Specialist', '2022-12-01', 61),
+  ('Financial Planner', '2023-01-01', 62),
+  ('Sales Analyst', '2023-02-01', 63),
+  ('Software Engineer', '2023-03-01', 64),
+  ('Marketing Coordinator', '2023-04-01', 65),
+  ('HR Manager', '2023-05-01', 66),
+  ('Sales Coordinator', '2023-06-01', 67),
+  ('Database Analyst', '2023-07-01', 68),
+  ('Financial Manager', '2023-08-01', 69),
+  ('Marketing Analyst', '2023-09-01', 70),
+  ('Manager', '2023-03-01', 71),
+  ('Developer', '2023-04-01', 72),
+  ('Analyst', '2023-05-01', 73),
+  ('Coordinator', '2023-06-01', 74),
+  ('Sales Representative', '2023-07-01', 75),
+  ('Database Administrator', '2023-08-01', 76),
+  ('Financial Analyst', '2023-09-01', 77),
+  ('HR Specialist', '2023-10-01', 78),
+  ('Marketing Manager', '2023-11-01', 79),
+  ('Sales Manager', '2023-12-01', 80);
+
+SELECT * FROM Employee ORDER BY FIRST_NAME;
+SELECT * FROM Employee ORDER BY FIRST_NAME DESC;
+
+SELECT COUNT(*) AS C FROM EMPLOYEE WHERE DEPARTMENT='IT';
+
+SELECT FIRST_NAME, LAST_NAME FROM Employee WHERE SALARY BETWEEN 50000 AND 100000;
+
+SELECT FIRST_NAME, LAST_NAME, COUNT(*) FROM Employee GROUP BY FIRST_NAME, LAST_NAME HAVING COUNT(*) > 1;
+
+SELECT * FROM Employee WHERE MOD(EMP_ID, 2) = 0;
+
+SELECT Employee.* FROM Employee LEFT JOIN bonus ON Employee.EMP_ID = bonus.EMP_REF_ID WHERE bonus.EMP_REF_ID IS NULL;
+
+SELECT * FROM Employee ORDER BY EMP_ID LIMIT 10;
+
+SELECT FIRST_NAME, LAST_NAME, SALARY FROM Employee GROUP BY FIRST_NAME, LAST_NAME,SALARY HAVING COUNT(*) > 1;
+
+SELECT * FROM Employee WHERE EMP_ID <= (SELECT COUNT(*) / 2 FROM Employee);
+
+SELECT EMP_ID, FIRST_NAME, LAST_NAME, SALARY
+FROM (
+    SELECT EMP_ID, FIRST_NAME, LAST_NAME, SALARY,
+           DENSE_RANK() OVER (ORDER BY SALARY DESC) AS salary_rank
+    FROM Employee
+) ranked_salaries
+WHERE salary_rank <= 2;
+
+DELIMITER //
+CREATE TRIGGER check_age BEFORE INSERT ON Employee 
+FOR EACH ROW
+BEGIN
+    IF (YEAR(CURRENT_DATE) - YEAR(NEW.JOINING_DATE)) < 18 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Employee must be at least 18 years old';
+    END IF;
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER backup_employee BEFORE DELETE ON Employee
+FOR EACH ROW
+BEGIN
+    INSERT INTO employee_backup (EMP_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT)
+    VALUES (OLD.EMP_ID, OLD.FIRST_NAME, OLD.LAST_NAME, OLD.SALARY, OLD.JOINING_DATE, OLD.DEPARTMENT);
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER count_inserted_tuples
+BEFORE INSERT ON Employee
+FOR EACH ROW
+BEGIN
+    -- Increment the counter for each new tuple insertion
+    SET @inserted_tuples_count = @inserted_tuples_count + 1 ;
+END;
+SET @inserted_tuples_count = 0;
+//
+DELIMITER ;
+
+
+
+SELECT * FROM Employee ORDER BY FIRST_NAME ASC, DEPARTMENT DESC;
+2 SQL query to fetch the count of employees working in the department ‘Admin’.
+SELECT COUNT(*) FROM Employee WHERE DEPARTMENT = 'Admin';
+
+3 SQL query to fetch Employee names with salaries >= 50000 and <= 100000.
+SELECT FIRST_NAME, LAST_NAME FROM Employee WHERE SALARY BETWEEN 50000 AND 100000;
+ 
+
+4. SQL query to print details of the Workers who are also Managers.
+SELECT E.* FROM Employee E
+JOIN Title T ON E.EMP_ID = T.EMP_REF_ID AND T.EMP_TITLE = 'Manager
+
+5. SQL query to fetch duplicate records having matching data in some fields of a table.
+SELECT EMP_ID, COUNT(*) FROM Employee GROUP BY EMP_ID HAVING COUNT(*) > 1;
+
+
+6. SQL query to show only even rows from a table.
+SELECT * FROM Employee WHERE MOD(EMP_ID, 2) = 0;
+
+7. SQL query to show records from one table that another table does not have. Find employees in employee table that do not exist in bonus table.
+DELETE FROM Bonus WHERE EMP_REF_ID = 50;
+SELECT * FROM Employee WHERE EMP_ID NOT IN (SELECT EMP_REF_ID FROM Bonus);
+
+
+8. SQL query to show the top n (say 10) records of a table.
+SELECT * FROM Employee LIMIT 10;
+
+9. Find people who have the same salary.
+SELECT SALARY, COUNT(*) FROM Employee GROUP BY SALARY HAVING COUNT(*) > 1;
+
+
+-- 10. SQL query to fetch the first 50% records from a table.
+SELECT * FROM ( SELECT *,
+ROW_NUMBER() OVER (ORDER BY EMP_ID) AS rn
+FROM Employee
+) AS subquery
+WHERE rn <= (SELECT COUNT(*)/2 FROM Employee);
+
+11. Find the highest 2 salaries without LIMIT or TOP.
+SELECT DISTINCT SALARY FROM Employee ORDER BY SALARY DESC LIMIT 2;
+
+
+12. Create a trigger to ensure that no employee joining date less than current date can be inserted in the database.
+DELIMITER //
+CREATE TRIGGER before_insert_employee BEFORE INSERT ON Employee
+FOR EACH ROW BEGIN
+IF NEW.JOINING_DATE >= CURDATE() THEN SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'Joining date must be less than the current date.'; END IF;
+END;
+// DELIMITER ;
+-- TSETING 12
+INSERT INTO Employee VALUES (51, 'PATEL', 'Fletcher', 80000.00, '2025-08-10', 'Finance');
+
+
+13. Create a trigger which will work before deletion in employee table and create a duplicate copy of the record in another table employee_backup.
+DELIMITER //
+CREATE TRIGGER before_delete_employee BEFORE DELETE ON Employee
+FOR EACH ROW BEGIN
+INSERT INTO employee_backup (EMP_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT)
+VALUES	(OLD.EMP_ID,	OLD.FIRST_NAME,	OLD.LAST_NAME,	OLD.SALARY, OLD.JOINING_DATE, OLD.DEPARTMENT);
+END;
+// DELIMITER ;
+-- TESING 13
+DELETE FROM Title WHERE EMP_REF_ID = 50; DELETE FROM Bonus WHERE EMP_REF_ID = 50; DELETE FROM Employee WHERE EMP_ID = 50;
+select * FROM employee_backup;
+
+
+
+14. Create a trigger to count the number of new tuples inserted using each insert statement.
+ 
+DELIMITER //
+CREATE TRIGGER after_insert_employee AFTER INSERT ON Employee
+FOR EACH ROW BEGIN
+INSERT INTO insert_count (table_name, count) VALUES ('Employee', 1)
+ON DUPLICATE KEY UPDATE count = count + 1; END;
+// DELIMITER ;
+-- TESTING 14
+INSERT INTO Employee VALUES (52, 'PATELboss', 'Fletcher', 80000.00, '2021-08-10', 'Finance');
+select * from insert_count;
+
+
+
+
+
+
+
+
+
